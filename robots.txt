@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agentponyma.github.io/career-site/sitemap.xml
