@@ -697,6 +697,41 @@
     transition: all 0.2s;
   }
   .form-line-btn:hover { background: #05b04c; transform: translateY(-1px); }
+
+  /* ── FAQ ── */
+  .faq-section { background: var(--bg3); padding: 100px 6%; }
+  .faq-list { max-width: 720px; margin: 3rem auto 0; }
+  .faq-item {
+    border-bottom: 1px solid var(--border-light);
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border-light); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 0; cursor: pointer;
+    font-size: 1.05rem; font-weight: 600; color: var(--text);
+    background: none; border: none; width: 100%; text-align: left;
+    font-family: inherit; line-height: 1.5;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-icon {
+    flex-shrink: 0; width: 28px; height: 28px; margin-left: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; background: var(--bg2);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.2s;
+    font-size: 1.1rem; color: var(--text3);
+  }
+  .faq-item.active .faq-icon { transform: rotate(45deg); background: var(--accent-light); color: var(--accent); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+    opacity: 0;
+  }
+  .faq-item.active .faq-a { max-height: 200px; opacity: 1; }
+  .faq-a-inner {
+    padding: 0 0 1.4rem;
+    color: var(--text2); font-size: 0.95rem; line-height: 1.75;
+  }
 </style>
 </head>
 <body>
@@ -711,6 +746,7 @@
     <li><a href="#reviews">學員評價</a></li>
     <li><a href="#resources">獨家資源</a></li>
     <li><a href="#pricing">課程費用</a></li>
+    <li><a href="#faq">常見問題</a></li>
   </ul>
   <div style="display:flex; align-items:center; gap:0.6rem;">
     <a href="https://line.me/R/ti/p/@582sobyj" target="_blank" class="nav-line">LINE 加好友</a>
@@ -1053,6 +1089,38 @@
 
   </div>
 
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="section-label reveal" style="text-align:center;">常見問題</div>
+  <div class="section-title reveal rd1" style="text-align:center;">你可能想問的事</div>
+  <div class="faq-list">
+    <div class="faq-item reveal rd1">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">一次諮詢大概多久？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">每次約 1–1.5 小時，依主題深度彈性調整。</div></div>
+    </div>
+    <div class="faq-item reveal rd1">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">我還在猶豫要不要換工作，也可以聊嗎？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">當然！很多人就是在這個階段來的。先聊聊現況，幫你釐清方向。</div></div>
+    </div>
+    <div class="faq-item reveal rd2">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">跟一般職涯顧問有什麼不同？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">馬經理有 Google 和聯發科的實戰主管經驗，面試過上百人。不是紙上談兵，是真的看過、做過、踩過坑的人在帶你。</div></div>
+    </div>
+    <div class="faq-item reveal rd2">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">線上還是實體？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">目前以線上（Google Meet）為主，時間更彈性，全台灣都能服務。</div></div>
+    </div>
+    <div class="faq-item reveal rd3">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">第一次諮詢需要準備什麼？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">帶上你的履歷（有的話）和你目前的困惑就好。沒有履歷也沒關係，我們從聊天開始。</div></div>
+    </div>
+    <div class="faq-item reveal rd3">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">諮詢內容會保密嗎？<span class="faq-icon">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">絕對保密。所有對話內容只有你和馬經理知道。</div></div>
+    </div>
+  </div>
 </section>
 
 <!-- CTA FORM -->
