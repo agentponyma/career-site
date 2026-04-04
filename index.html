@@ -595,8 +595,8 @@
 
   /* ── PRICING ── */
   .pricing-plans-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem; margin-top: 3rem; max-width: 960px;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 1rem; margin-top: 3rem; max-width: 1100px;
   }
   .pricing-plan-card {
     background: #fff; border: 1px solid var(--border-light);
@@ -692,12 +692,12 @@
   .discount-note { font-size: 0.72rem; font-weight: 600; opacity: 0.85; margin-top: 4px; }
 
   @media (max-width: 700px) {
-    .pricing-plans-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-plans-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     .pricing-discount-card { flex-direction: column; }
     .discount-badge { width: 100%; text-align: center; padding: 1rem; }
   }
   @media (max-width: 480px) {
-    .pricing-plans-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+    .pricing-plans-grid { grid-template-columns: 1fr; max-width: 340px; margin-left: auto; margin-right: auto; }
   }
 
   /* ── CREDENTIAL STATEMENTS ── */
@@ -1134,6 +1134,16 @@
 
     <div class="pricing-plan-card">
       <div class="plan-header">
+        <div class="plan-lessons">體驗</div>
+        <div class="plan-duration">25 分鐘課</div>
+      </div>
+      <div class="plan-price">US$24.20</div>
+      <div class="plan-per">首次限定</div>
+      <a href="#" onclick="tryLine('\u9ad4\u9a57');return false;" class="pricing-btn pricing-btn-line">💬 本站預約專屬優惠</a>
+    </div>
+
+    <div class="pricing-plan-card">
+      <div class="plan-header">
         <div class="plan-lessons">1 堂</div>
         <div class="plan-duration">50 分鐘課</div>
       </div>
@@ -1424,7 +1434,8 @@ async function submitForm() {
 </style>
 <script>
 function tryLine(lessons) {
-  var msg = encodeURIComponent('嗨！我對' + lessons + '堂職涯輔導課程有興趣，想了解更多！');
+  var label = (lessons === '體驗') ? '25分鐘體驗課程' : lessons + '堂職涯輔導課程';
+  var msg = encodeURIComponent('嗨！我對' + label + '有興趣，想了解更多！');
   var lineUrl = 'https://line.me/R/oaMessage/@582sobyj/?' + msg;
   // 手機直接開 LINE
   if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
