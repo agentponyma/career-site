@@ -594,29 +594,51 @@
   }
 
   /* ── PRICING ── */
-  .pricing-single-wrap { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 3rem; max-width: 860px; }
-
-  .pricing-single-card {
+  .pricing-plans-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem; margin-top: 3rem; max-width: 960px;
+  }
+  .pricing-plan-card {
     background: #fff; border: 1px solid var(--border-light);
-    border-radius: var(--radius); padding: 2.2rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
-    box-shadow: var(--shadow);
-    flex-wrap: wrap;
+    border-radius: var(--radius); padding: 2rem 1.5rem;
+    text-align: center; position: relative;
+    box-shadow: var(--shadow); transition: all 0.25s;
+    display: flex; flex-direction: column; align-items: center;
   }
-  .psingle-left { flex: 1; }
-  .psingle-services { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
-  .psingle-service-item {
-    display: flex; align-items: center; gap: 0.6rem;
-    font-size: 0.95rem; font-weight: 600; color: var(--text);
+  .pricing-plan-card:hover {
+    transform: translateY(-4px); box-shadow: var(--shadow-md);
+    border-color: var(--border);
   }
-  .psingle-service-item span { font-size: 1.2rem; }
-  .psingle-unit {
-    font-size: 0.8rem; color: var(--text3);
-    padding-top: 1rem; border-top: 1px solid var(--border-light);
+  .plan-popular {
+    border: 2px solid var(--accent) !important;
+    box-shadow: var(--shadow-md);
   }
-  .psingle-right { text-align: center; flex-shrink: 0; }
-  .psingle-price-label { font-size: 0.72rem; color: var(--text4); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
-  .psingle-price { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 1rem; }
+  .plan-popular-tag {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent); color: #fff;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em;
+    padding: 4px 14px; border-radius: 12px; white-space: nowrap;
+  }
+  .plan-header { margin-bottom: 1.2rem; }
+  .plan-lessons {
+    font-size: 1.8rem; font-weight: 800; color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .plan-duration { font-size: 0.78rem; color: var(--text3); margin-top: 2px; }
+  .plan-price {
+    font-size: 1.6rem; font-weight: 800; color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .plan-per { font-size: 0.75rem; color: var(--text4); margin-top: 2px; margin-bottom: 0.8rem; }
+  .plan-badge {
+    display: inline-block; background: #e0f9e7; color: #18a34a;
+    font-size: 0.72rem; font-weight: 700; padding: 3px 10px;
+    border-radius: 8px; margin-bottom: 0.8rem;
+  }
+  .plan-bonus {
+    font-size: 0.75rem; color: var(--accent); font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
   .pricing-btn {
     display: inline-block;
     background: var(--accent); color: #fff;
@@ -665,9 +687,12 @@
   .discount-note { font-size: 0.72rem; font-weight: 600; opacity: 0.85; margin-top: 4px; }
 
   @media (max-width: 700px) {
-    .pricing-single-card, .pricing-discount-card { flex-direction: column; }
-    .psingle-right, .discount-badge { width: 100%; }
-    .discount-badge { text-align: center; padding: 1rem; }
+    .pricing-plans-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-discount-card { flex-direction: column; }
+    .discount-badge { width: 100%; text-align: center; padding: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .pricing-plans-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
   }
 
   /* ── CREDENTIAL STATEMENTS ── */
@@ -1097,26 +1122,62 @@
 <!-- PRICING -->
 <section id="pricing" style="background:#fff; border-top:1px solid var(--border-light);">
   <div class="section-label reveal">課程費用</div>
-  <div class="section-title reveal rd1">每堂課 50 分鐘，<span class="muted">與 AmazingTalker 平台一致</span></div>
-  <p class="section-sub reveal rd2">每堂課 <strong>50 分鐘</strong>，三種服務皆適用，可依需求自由搭配堂數。實際定價請前往 AmazingTalker 平台查看。</p>
+  <div class="section-title reveal rd1">每堂課 50 分鐘，<span class="muted">買越多省越多</span></div>
+  <p class="section-sub reveal rd2">三種服務皆適用（履歷健診、模擬面試、職涯規劃），可依需求自由搭配堂數。透過 <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" style="color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:3px;">AmazingTalker 平台</a> 預約購買。</p>
 
-  <div class="pricing-single-wrap reveal rd2">
+  <div class="pricing-plans-grid reveal rd2">
 
-    <div class="pricing-single-card">
-      <div class="psingle-left">
-        <div class="psingle-services">
-          <div class="psingle-service-item"><span>📄</span> 履歷健診 & 優化</div>
-          <div class="psingle-service-item"><span>🎯</span> 全真模擬面試</div>
-          <div class="psingle-service-item"><span>🗺️</span> 職涯引導 & 規劃</div>
-        </div>
-        <div class="psingle-unit">每堂 50 分鐘，三種服務皆適用，可自由組合堂數</div>
+    <div class="pricing-plan-card">
+      <div class="plan-header">
+        <div class="plan-lessons">1 堂</div>
+        <div class="plan-duration">50 分鐘課</div>
       </div>
-      <div class="psingle-right">
-        <div class="psingle-price-label">定價</div>
-        <div class="psingle-price">前往平台查看</div>
-        <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" class="pricing-btn">查看即時定價 →</a>
-      </div>
+      <div class="plan-price">US$49.50</div>
+      <div class="plan-per">/ 堂</div>
+      <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" class="pricing-btn">立即預約 →</a>
     </div>
+
+    <div class="pricing-plan-card">
+      <div class="plan-header">
+        <div class="plan-lessons">5 堂</div>
+        <div class="plan-duration">50 分鐘課</div>
+      </div>
+      <div class="plan-price">US$47.03</div>
+      <div class="plan-per">/ 堂</div>
+      <div class="plan-badge">5% off</div>
+      <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" class="pricing-btn">立即預約 →</a>
+    </div>
+
+    <div class="pricing-plan-card plan-popular">
+      <div class="plan-popular-tag">最多人選</div>
+      <div class="plan-header">
+        <div class="plan-lessons">10 堂</div>
+        <div class="plan-duration">50 分鐘課</div>
+      </div>
+      <div class="plan-price">US$44.55</div>
+      <div class="plan-per">/ 堂</div>
+      <div class="plan-badge">10% off</div>
+      <div class="plan-bonus">🎁 贈三大獨家資源</div>
+      <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" class="pricing-btn">立即預約 →</a>
+    </div>
+
+    <div class="pricing-plan-card">
+      <div class="plan-header">
+        <div class="plan-lessons">20 堂</div>
+        <div class="plan-duration">50 分鐘課</div>
+      </div>
+      <div class="plan-price">US$42.08</div>
+      <div class="plan-per">/ 堂</div>
+      <div class="plan-badge">15% off</div>
+      <div class="plan-bonus">🎁 贈三大獨家資源</div>
+      <a href="https://tw.amazingtalker.com/teachers-and-tutors/01fd75eb-e500-4dfd-a73f-030e8572d919?from_tutors_page&language=career_counseling" target="_blank" class="pricing-btn">立即預約 →</a>
+    </div>
+
+  </div>
+
+  <div style="text-align:center; margin-top:1.5rem;" class="reveal rd3">
+    <p style="font-size:0.8rem; color:var(--text4);">📄 履歷健診 &nbsp;·&nbsp; 🎯 模擬面試 &nbsp;·&nbsp; 🗺️ 職涯規劃 — 三種服務皆適用，可自由組合</p>
+  </div>
 
     <div class="pricing-discount-card">
       <div class="discount-left">
