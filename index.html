@@ -652,13 +652,7 @@
     background: #06c755; font-size: 0.78rem;
   }
   .pricing-btn-line:hover { background: #05b04c; }
-  /* 電腦版顯示表單按鈕，手機版顯示 LINE 按鈕 */
-  .mobile-only { display: none; }
-  .desktop-only { display: inline-block; }
-  @media (max-width: 768px) {
-    .mobile-only { display: inline-block; }
-    .desktop-only { display: none; }
-  }
+
 
   .pricing-discount-card {
     background: linear-gradient(135deg, #fff8f5, #fff3ee);
@@ -1145,8 +1139,7 @@
       </div>
       <div class="plan-price">US$49.50</div>
       <div class="plan-per">/ 堂</div>
-      <a href="https://line.me/R/oaMessage/@582sobyj/?%E5%97%A8%EF%BC%81%E6%88%91%E6%83%B3%E8%B3%BC%E8%B2%B71%E5%A0%82%E8%81%B7%E6%B6%AF%E8%BC%94%E5%B0%8E%E8%AA%B2%E7%A8%8B%EF%BC%8C%E8%AB%8B%E5%95%8F%E5%A6%82%E4%BD%95%E9%A0%90%E7%B4%84%EF%BC%9F" target="_blank" class="pricing-btn pricing-btn-line mobile-only">💬 LINE 預約專屬優惠</a>
-      <a href="#contact" class="pricing-btn pricing-btn-line desktop-only">💬 本站預約專屬優惠</a>
+      <a href="#" onclick="tryLine(1);return false;" class="pricing-btn pricing-btn-line">💬 本站預約專屬優惠</a>
     </div>
 
     <div class="pricing-plan-card">
@@ -1157,8 +1150,7 @@
       <div class="plan-price">US$47.03</div>
       <div class="plan-per">/ 堂</div>
       <div class="plan-badge">5% off</div>
-      <a href="https://line.me/R/oaMessage/@582sobyj/?%E5%97%A8%EF%BC%81%E6%88%91%E6%83%B3%E8%B3%BC%E8%B2%B75%E5%A0%82%E8%81%B7%E6%B6%AF%E8%BC%94%E5%B0%8E%E8%AA%B2%E7%A8%8B%EF%BC%8C%E8%AB%8B%E5%95%8F%E5%A6%82%E4%BD%95%E9%A0%90%E7%B4%84%EF%BC%9F" target="_blank" class="pricing-btn pricing-btn-line mobile-only">💬 LINE 預約專屬優惠</a>
-      <a href="#contact" class="pricing-btn pricing-btn-line desktop-only">💬 本站預約專屬優惠</a>
+      <a href="#" onclick="tryLine(5);return false;" class="pricing-btn pricing-btn-line">💬 本站預約專屬優惠</a>
     </div>
 
     <div class="pricing-plan-card plan-popular">
@@ -1171,8 +1163,7 @@
       <div class="plan-per">/ 堂</div>
       <div class="plan-badge">10% off</div>
       <div class="plan-bonus">🎁 贈三大獨家資源</div>
-      <a href="https://line.me/R/oaMessage/@582sobyj/?%E5%97%A8%EF%BC%81%E6%88%91%E6%83%B3%E8%B3%BC%E8%B2%B710%E5%A0%82%E8%81%B7%E6%B6%AF%E8%BC%94%E5%B0%8E%E8%AA%B2%E7%A8%8B%EF%BC%8C%E8%AB%8B%E5%95%8F%E5%A6%82%E4%BD%95%E9%A0%90%E7%B4%84%EF%BC%9F" target="_blank" class="pricing-btn pricing-btn-line mobile-only">💬 LINE 預約專屬優惠</a>
-      <a href="#contact" class="pricing-btn pricing-btn-line desktop-only">💬 本站預約專屬優惠</a>
+      <a href="#" onclick="tryLine(10);return false;" class="pricing-btn pricing-btn-line">💬 本站預約專屬優惠</a>
     </div>
 
     <div class="pricing-plan-card">
@@ -1184,8 +1175,7 @@
       <div class="plan-per">/ 堂</div>
       <div class="plan-badge">15% off</div>
       <div class="plan-bonus">🎁 贈三大獨家資源</div>
-      <a href="https://line.me/R/oaMessage/@582sobyj/?%E5%97%A8%EF%BC%81%E6%88%91%E6%83%B3%E8%B3%BC%E8%B2%B720%E5%A0%82%E8%81%B7%E6%B6%AF%E8%BC%94%E5%B0%8E%E8%AA%B2%E7%A8%8B%EF%BC%8C%E8%AB%8B%E5%95%8F%E5%A6%82%E4%BD%95%E9%A0%90%E7%B4%84%EF%BC%9F" target="_blank" class="pricing-btn pricing-btn-line mobile-only">💬 LINE 預約專屬優惠</a>
-      <a href="#contact" class="pricing-btn pricing-btn-line desktop-only">💬 本站預約專屬優惠</a>
+      <a href="#" onclick="tryLine(20);return false;" class="pricing-btn pricing-btn-line">💬 本站預約專屬優惠</a>
     </div>
 
   </div>
@@ -1432,12 +1422,22 @@ async function submitForm() {
 <style>
 @media(max-width:900px){#line-fab{display:flex!important;}}
 </style>
-</body>
-</html>
-:center;text-decoration:none;font-size:28px;"
-   id="line-fab">💬</a>
-<style>
-@media(max-width:900px){#line-fab{display:flex!important;}}
-</style>
+<script>
+function tryLine(lessons) {
+  var msg = encodeURIComponent('嗨！我對' + lessons + '堂職涯輔導課程有興趣，想了解更多！');
+  var lineUrl = 'https://line.me/R/oaMessage/@582sobyj/?' + msg;
+  // 手機直接開 LINE
+  if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.open(lineUrl, '_blank');
+    return;
+  }
+  // 電腦：嘗試開 LINE，2 秒後沒跳走就 fallback 到表單
+  var w = window.open(lineUrl, '_blank');
+  setTimeout(function() {
+    try { if (w && !w.closed) { w.close(); } } catch(e) {}
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+  }, 2000);
+}
+</script>
 </body>
 </html>
