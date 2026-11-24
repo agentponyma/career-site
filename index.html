@@ -1303,6 +1303,11 @@
         <textarea id="f-question" class="form-textarea" placeholder="例：想轉職到外商但英文不夠好、履歷投出去都沒有回音、不知道如何回答行為面試題..."></textarea>
       </div>
 
+      <!-- 防機器人：真人看不到也不會填，填了就代表機器 -->
+      <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+        <label>Website<input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
       <button class="form-submit" onclick="submitForm()">
         <span id="submit-text">送出預約申請</span>
       </button>
@@ -1362,7 +1367,19 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 //  設定你的 Google Apps Script 網址
 //  部署後貼上 Web App URL
 // ══════════════════════════════════════════
-const APPS_SCRIPT_URL = '請貼上你的_Apps_Script_Web_App_URL';
+const LEAD_CONFIG_URL = 'lead-config.json';
+let _leadCfg = null;
+async function loadLeadConfig() {
+  if (_leadCfg) return _leadCfg;
+  try {
+    const res = await fetch(LEAD_CONFIG_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    _leadCfg = res.ok ? await res.json() : null;
+  } catch (err) {
+    console.warn('lead-config 讀取失敗', err);
+    _leadCfg = null;
+  }
+  return _leadCfg;
+}
 
 // ── LOCAL STORAGE (備份用) ──
 const STORE_KEY = 'ma_leads_v1';
@@ -1396,7 +1413,8 @@ async function submitForm() {
     role:     role     || '未填寫',
     question: question || '未填寫',
     time: new Date().toLocaleString('zh-TW'),
-    status: 'new'
+    status: 'new',
+    website: (document.getElementById('f-website') || {}).value || ''
   };
 
   // 1. 存到本地備份
@@ -1404,30 +1422,50 @@ async function submitForm() {
   leads.unshift(lead);
   saveLeads(leads);
 
-  // 2. 送到 Google Sheets
+  // 2. 送到後端（端點清單在 lead-config.json，逐個嘗試直到成功）
+  const cfg = await loadLeadConfig();
+  const endpoints = (cfg && Array.isArray(cfg.endpoints)) ? cfg.endpoints : [];
   let sheetOk = false;
-  if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('請貼上')) {
+  let lastErr = null;
+  for (const url of endpoints) {
     try {
-      await fetch(APPS_SCRIPT_URL, {
+      const res = await fetch(url, {
         method: 'POST',
-        mode: 'no-cors',   // Apps Script 需要 no-cors
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(lead)
       });
-      sheetOk = true;
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && data.ok) { sheetOk = true; break; }
+      lastErr = (data && data.error) ? data.error : ('HTTP ' + res.status);
     } catch (err) {
-      console.warn('Google Sheets 寫入失敗，已備份到本地', err);
+      lastErr = (err && err.message) ? err.message : 'network error';
     }
   }
 
-  // 3. 成功顯示
-  document.getElementById('submit-text').textContent = '✅ 已送出！';
-  document.getElementById('form-success').classList.remove('hidden');
-  btn.style.opacity = '0.6';
+  const successEl = document.getElementById('form-success');
+  const btnText = document.getElementById('submit-text');
 
-  ['f-name','f-phone','f-email','f-role','f-question'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  if (sheetOk) {
+    // 3. 成功顯示（已確認寫入試算表）
+    btnText.textContent = '✅ 已送出！';
+    successEl.textContent = '✅ 已收到你的預約！馬經理會儘快與你聯絡。';
+    successEl.style.background = 'var(--green-light)';
+    successEl.style.color = '#18a34a';
+    successEl.classList.remove('hidden');
+    btn.style.opacity = '0.6';
+    ['f-name','f-phone','f-email','f-role','f-question'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+  } else {
+    // 失敗：不假裝成功，保留內容讓訪客重試，並引導走 LINE
+    btnText.textContent = '❌ 送出失敗，請再試一次';
+    successEl.textContent = '送出沒成功，請再按一次送出，或直接用 LINE 聯繫：@582sobyj';
+    successEl.style.background = '#fef2f2';
+    successEl.style.color = '#dc2626';
+    successEl.classList.remove('hidden');
+    btn.disabled = false;
+    console.warn('表單送出失敗:', lastErr);
+  }
 }
 
 
