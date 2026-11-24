@@ -1,7 +1,8 @@
 {
   "endpoints": [
+    "https://jade-florist-scholarships-molecular.trycloudflare.com/lead/c90Qpeca2d66qEE3QLLA-STNWsrNoCW4VdZAVu73HN0",
     "https://dummy.invalid/lead/test"
   ],
-  "updated": "2026-11-24T10:59:59+08:00",
+  "updated": "2026-11-24T11:04:47+08:00",
   "note": "auto-synced by career-lead-sync.sh"
 }
