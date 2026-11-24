@@ -1435,7 +1435,9 @@ async function submitForm() {
         body: JSON.stringify(lead)
       });
       const data = await res.json().catch(() => null);
-      if (res.ok && data && data.ok) { sheetOk = true; break; }
+      // 不同後端回應格式：Apps Script 回 {success:true}，自架端點回 {ok:true}
+      const ok = data && (data.ok === true || data.success === true);
+      if (res.ok && ok) { sheetOk = true; break; }
       lastErr = (data && data.error) ? data.error : ('HTTP ' + res.status);
     } catch (err) {
       lastErr = (err && err.message) ? err.message : 'network error';
